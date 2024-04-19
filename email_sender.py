@@ -14,19 +14,19 @@ class EmailSender:
         self.password = config["EmailSettings"]["password"]
 
     def _create_message(self, subject: str, body: str, to: str) -> None:
-        msg = MIMEMultipart()
-        msg["From"] = self.username
-        msg["To"] = to
-        msg["Subject"] = subject
-        msg.attach(MIMEText(body, "plain"))
-        return msg
+        message = MIMEMultipart()
+        message["From"] = self.username
+        message["To"] = to
+        message["Subject"] = subject
+        message.attach(MIMEText(body, "plain"))
+        return message
 
     async def send_mail(self, subject: str, body: str, to: str) -> None:
-        msg = self._create_message(subject, body, to)
+        message = self._create_message(subject, body, to)
 
         try:
             await aiosmtplib.send(
-                msg,
+                message,
                 hostname=self.server,
                 port=self.port,
                 username=self.username,
