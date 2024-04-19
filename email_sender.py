@@ -1,17 +1,20 @@
 import aiosmtplib
-import configparser
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
 class EmailSender:
-    def __init__(self, config_path: str) -> None:
-        config = configparser.ConfigParser()
-        config.read(config_path)
-        self.server = config["EmailSettings"]["server"]
-        self.port = config.getint("EmailSettings", "port")
-        self.username = config["EmailSettings"]["username"]
-        self.password = config["EmailSettings"]["password"]
+    def __init__(
+            self, 
+            username: str, 
+            password: str,
+            server: str = "smtp.gmail.com", 
+            port: int = 465,
+        ) -> None:
+        self.server = server
+        self.port = port
+        self.username = username
+        self.password = password
 
     def _create_message(self, subject: str, body: str, to: str) -> None:
         message = MIMEMultipart()

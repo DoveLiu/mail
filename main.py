@@ -1,9 +1,22 @@
 import asyncio
+import configparser
 from email_sender import EmailSender
 
 
 async def main() -> None:
-    email_sender = EmailSender("config.ini")
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+    username = config["EmailSettings"]["username"]
+    password = config["EmailSettings"]["password"]
+    server = config["EmailSettings"]["server"]
+    port = config.getint("EmailSettings", "port")
+
+    email_sender = EmailSender(
+        username = username, 
+        password = password, 
+        server = server,
+        port = port
+    )
     await email_sender.send_mail("測試郵件", "test body", "doveliu0516@gmail.com")
 
 
