@@ -16,7 +16,7 @@ class EmailSender:
         self.username = username
         self.password = password
 
-    def _create_message(self, subject: str, body: str, to: str) -> None:
+    def _create_message(self, subject: str, body: str, to: str) -> MIMEMultipart:
         message = MIMEMultipart()
         message["From"] = self.username
         message["To"] = to
