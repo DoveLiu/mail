@@ -16,16 +16,16 @@ class EmailSender:
         self.username = username
         self.password = password
 
-    def _create_message(self, subject: str, body: str, to: str) -> MIMEMultipart:
+    def _create_message(self, subject: str, body: str, recipient: str) -> MIMEMultipart:
         message = MIMEMultipart()
         message["From"] = self.username
-        message["To"] = to
+        message["To"] = recipient
         message["Subject"] = subject
         message.attach(MIMEText(body, "plain"))
         return message
 
-    async def send_mail(self, subject: str, body: str, to: str) -> None:
-        message = self._create_message(subject, body, to)
+    async def send_mail(self, subject: str, body: str, recipient: str) -> None:
+        message = self._create_message(subject, body, recipient)
 
         await aiosmtplib.send(
             message,
