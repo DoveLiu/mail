@@ -24,14 +24,12 @@ class EmailSender:
     async def send_mail(self, subject: str, body: str, to: str) -> None:
         message = self._create_message(subject, body, to)
 
-        try:
-            await aiosmtplib.send(
-                message,
-                hostname=self.server,
-                port=self.port,
-                username=self.username,
-                password=self.password,
-                use_tls=True,
-            )
-        except aiosmtplib.SMTPException as e:
-            print(f"send mail error: {e}")
+        await aiosmtplib.send(
+            message,
+            hostname=self.server,
+            port=self.port,
+            username=self.username,
+            password=self.password,
+            use_tls=True,
+        )
+
