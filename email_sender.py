@@ -5,7 +5,7 @@ from email.mime.multipart import MIMEMultipart
 
 
 class EmailSender:
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str) -> None:
         config = configparser.ConfigParser()
         config.read(config_path)
         self.server = config["EmailSettings"]["server"]
@@ -13,7 +13,7 @@ class EmailSender:
         self.username = config["EmailSettings"]["username"]
         self.password = config["EmailSettings"]["password"]
 
-    def _create_message(self, subject: str, body: str, to: str):
+    def _create_message(self, subject: str, body: str, to: str) -> None:
         msg = MIMEMultipart()
         msg["From"] = self.username
         msg["To"] = to
@@ -21,7 +21,7 @@ class EmailSender:
         msg.attach(MIMEText(body, "plain"))
         return msg
 
-    async def send_mail(self, subject: str, body: str, to: str):
+    async def send_mail(self, subject: str, body: str, to: str) -> None:
         msg = self._create_message(subject, body, to)
 
         try:
