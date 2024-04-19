@@ -13,7 +13,7 @@ class EmailSender:
         self.username = config["EmailSettings"]["username"]
         self.password = config["EmailSettings"]["password"]
 
-    def __create_msg(self, subject: str, body: str, to: str):
+    def _create_message(self, subject: str, body: str, to: str):
         msg = MIMEMultipart()
         msg["From"] = self.username
         msg["To"] = to
@@ -22,7 +22,7 @@ class EmailSender:
         return msg
 
     async def send_mail(self, subject: str, body: str, to: str):
-        msg = self.__create_msg(subject, body, to)
+        msg = self._create_message(subject, body, to)
 
         try:
             await aiosmtplib.send(
