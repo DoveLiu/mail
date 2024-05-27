@@ -10,12 +10,12 @@ class EmailSender:
         self,
         username: str,
         password: str,
-        server: str = "smtp.gmail.com",
+        hostname: str = "smtp.gmail.com",
         port: int = 465,
     ) -> None:
         self.username = username
         self.password = password
-        self.server = server
+        self.hostname = hostname
         self.port = port
 
     def _create_message(
@@ -44,7 +44,7 @@ class EmailSender:
 
         await aiosmtplib.send(
             message,
-            hostname=self.server,
+            hostname=self.hostname,
             port=self.port,
             username=self.username,
             password=self.password,

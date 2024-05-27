@@ -12,7 +12,7 @@ async def main() -> None:
     port = config.getint("EmailSettings", "port")
 
     email_sender = EmailSender(
-        username=username, password=password, server=server, port=port
+        username=username, password=password, hostname=server, port=port
     )
 
     await email_sender.send_mail(
