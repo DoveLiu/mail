@@ -13,10 +13,10 @@ class EmailSender:
         server: str = "smtp.gmail.com",
         port: int = 465,
     ) -> None:
-        self.server = server
-        self.port = port
         self.username = username
         self.password = password
+        self.server = server
+        self.port = port
 
     def _create_message(
         self, subject: str, body: str, recipient: str, file_path: str = None
