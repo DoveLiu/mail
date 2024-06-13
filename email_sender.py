@@ -19,7 +19,7 @@ class EmailSender:
         self.port = port
 
     def _create_message(
-        self, subject: str, body: str, recipient: str, file_path: str = None
+        self, subject: str, body: str, recipient: str
     ) -> MIMEMultipart:
         message = MIMEMultipart()
         message["From"] = self.username
@@ -27,6 +27,11 @@ class EmailSender:
         message["Subject"] = subject
         message.attach(MIMEText(body, "plain"))
 
+        return message
+    
+    def _attach_file(
+        self, message: MIMEMultipart, file_path: str = None  
+    ) -> None :
         if file_path:
             with open(file_path, "rb") as file:
                 part = MIMEBase("application", "octet-stream")
@@ -35,12 +40,11 @@ class EmailSender:
                 part.add_header("Content-Disposition", f"attachment; filename={file_path.split('/')[-1]}")
                 message.attach(part)
 
-        return message
-
     async def send_mail(
         self, subject: str, body: str, recipient: str, file_path: str = None
     ) -> None:
-        message = self._create_message(subject, body, recipient, file_path)
+        message = self._create_message(subject, body, recipient)
+        self._attach_file(message=message, file_path=file_path)
 
         await aiosmtplib.send(
             message,
